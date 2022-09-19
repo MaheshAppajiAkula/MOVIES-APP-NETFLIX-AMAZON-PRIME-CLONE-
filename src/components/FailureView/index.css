@@ -1,0 +1,52 @@
+.failed-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #0d0d0d;
+  padding: 30px;
+  min-height: 100%;
+}
+
+.failure-view {
+  height: 19.000003814697266px;
+  width: 21.998653411865234px;
+  left: 1.0006866455078125px;
+  top: 2px;
+  border-radius: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .failure-view {
+    height: 38px;
+    width: 43.99729919433594px;
+    left: 2.0009765625px;
+    top: 4px;
+    border-radius: 0px;
+  }
+}
+
+.failed-text {
+  font-family: HK Grotesk;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ffffff;
+}
+
+.retry-button {
+  border: none;
+  background-color: #ffffff;
+  border-radius: 3px;
+  color: #171f46;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: 'HK Grotesk';
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
