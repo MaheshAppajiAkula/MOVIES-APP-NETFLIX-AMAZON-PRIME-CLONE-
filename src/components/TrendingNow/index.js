@@ -64,11 +64,8 @@ class TrendingNow extends Component {
 
   renderSuccessView = () => {
     const {trendingNowMoviesList} = this.state
-    return (
-      <>
-        <ReactSlick moviesList={trendingNowMoviesList} />
-      </>
-    )
+
+    return <ReactSlick moviesList={trendingNowMoviesList} />
   }
 
   renderTrendingNowCarousel = () => {

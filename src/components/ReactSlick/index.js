@@ -12,7 +12,7 @@ const settings = {
   infinite: false,
   speed: 500,
   slidesToShow: 4,
-  slidesToScroll: 4,
+  slidesToScroll: 1,
 
   responsive: [
     {
@@ -23,16 +23,9 @@ const settings = {
       },
     },
     {
-      breakpoint: 600,
+      breakpoint: 400,
       settings: {
         slidesToShow: 3,
-        slidesToScroll: 1,
-      },
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 2,
         slidesToScroll: 1,
       },
     },
@@ -45,19 +38,21 @@ class ReactSlick extends Component {
 
     return (
       <>
-        <Slider {...settings}>
-          {moviesList.map(eachMovie => (
-            <Link to={`/movies/${eachMovie.id}`} key={eachMovie.id}>
-              <li testid="MovieCard" className="list-item" key={eachMovie.id}>
-                <img
-                  src={eachMovie.posterPath}
-                  alt={eachMovie.title}
-                  className="movie-img"
-                />
-              </li>
-            </Link>
-          ))}
-        </Slider>
+        <div className="movies-page">
+          <Slider {...settings}>
+            {moviesList.map(eachMovie => (
+              <Link to={`/movies/${eachMovie.id}`} key={eachMovie.id}>
+                <li testid="MovieCard" className="list-item" key={eachMovie.id}>
+                  <img
+                    src={eachMovie.posterPath}
+                    alt={eachMovie.title}
+                    className="movie-img"
+                  />
+                </li>
+              </Link>
+            ))}
+          </Slider>
+        </div>
       </>
     )
   }
