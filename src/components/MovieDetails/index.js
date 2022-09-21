@@ -1,9 +1,9 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {format} from 'date-fns'
 import Cookies from 'js-cookie'
+import Header from '../Header'
 import FailureView from '../FailureView'
 import LoadingView from '../Loader'
-import MovieSpecifications from '../MovieSpecifications'
 import MovieDetailsLink from '../MovieDetailsLink'
 import FooterSection from '../FooterSection'
 
@@ -49,14 +49,14 @@ class MovieDetails extends Component {
 
       const updatedData = fetchedData.movie_details.map(eachMovie => ({
         id: eachMovie.id,
+        adult: eachMovie.adult,
         backdropPath: eachMovie.backdrop_path,
         budget: eachMovie.budget,
         title: eachMovie.title,
         overview: eachMovie.overview,
-        originalLanguage: eachMovie.original_language,
         releaseDate: eachMovie.release_date,
-        count: eachMovie.vote_count,
-        rating: eachMovie.vote_average,
+        ratingCount: eachMovie.vote_count,
+        ratingAverage: eachMovie.vote_average,
         runtime: eachMovie.runtime,
         posterPath: eachMovie.poster_path,
       }))
@@ -77,7 +77,7 @@ class MovieDetails extends Component {
       const spokenLanguagesData = fetchedData.movie_details.spoken_languages.map(
         eachLanguage => ({
           id: eachLanguage.id,
-          language: eachLanguage.name,
+          language: eachLanguage.english_name,
         }),
       )
 
@@ -111,18 +111,78 @@ class MovieDetails extends Component {
       spokenLanguagesList,
     } = this.state
 
+    const {
+      adult,
+      backdropPath,
+      budget,
+      overview,
+      releaseDate,
+      runtime,
+      title,
+      ratingAverage,
+      ratingCount,
+    } = movieDetailsList
+
+    const hours = Math.floor(runtime / 60)
+    const minutes = runtime % 60
+    const movieRuntime = `${hours}h ${minutes}m `
+    const censorCertificate = adult ? 'A' : 'U/A'
+    const releaseYear = format(new Date(releaseDate), 'yyyy')
+    const movieReleaseDate = format(new Date(releaseDate), 'do MMMM Y')
+
     return (
       <>
-        <div>
-          {movieDetailsList.map(eachMovie => (
-            <MovieSpecifications movieInfo={eachMovie} key={eachMovie.id} />
-          ))}
-          <div className="movie-information">
-            <div className="movie-details-container">
-              <div className="each-info"></div>
-              <div className="each-info"></div>
-              <div className="each-info"></div>
-              <div className="each-info"></div>
+        <div
+          style={{backgroundImage: `url(${backdropPath})`}}
+          className="movie-details-home-page"
+        >
+          <Header />
+          <div className="home-page-container">
+            <h1 className="title">{title}</h1>
+            <div className="movie-details">
+              <p className="run-time">{movieRuntime}</p>
+              <p className="censor">{censorCertificate}</p>
+              <p className="rele-year">{releaseYear}</p>
+            </div>
+            <p className="over-view">{overview}</p>
+            <button type="button" className="play-btn">
+              Play
+            </button>
+          </div>
+        </div>
+        <div className="movie-information">
+          <div className="movie-details-container">
+            <div className="each-info">
+              <h1 className="info-heading">Genres</h1>
+              <ul className="list-items">
+                {genresList.map(eachGenre => (
+                  <li className="genre-name" key={eachGenre.id}>
+                    {eachGenre.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="each-info">
+              <h1 className="info-heading">Audio Available</h1>
+              <ul className="list-items">
+                {spokenLanguagesList.map(eachLang => (
+                  <li className="genre-name" key={eachLang.id}>
+                    {eachLang.language}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="each-info">
+              <h1 className="info-heading">Rating Count</h1>
+              <p className="genre-name">{ratingCount}</p>
+              <h1 className="info-heading">Rating Average</h1>
+              <p className="genre-name">{ratingAverage}</p>
+            </div>
+            <div className="each-info">
+              <h1 className="info-heading">Budget</h1>
+              <p className="genre-name">{budget}</p>
+              <h1 className="info-heading">Release Date</h1>
+              <p className="genre-name">{movieReleaseDate}</p>
             </div>
           </div>
           <div className="similar-movies-container">
@@ -137,6 +197,24 @@ class MovieDetails extends Component {
         </div>
       </>
     )
+  }
+
+  renderMovieDetailsView = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      case apiStatusConstants.success:
+        return this.renderSuccessView()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      default:
+        return null
+    }
+  }
+
+  render() {
+    return <>{this.renderMovieDetailsView()}</>
   }
 }
 
