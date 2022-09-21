@@ -113,7 +113,7 @@ class Login extends Component {
         <div className="login-container">
           <img
             className="website-logo"
-            alt="website-logo"
+            alt="login website logo"
             src="https://res.cloudinary.com/ddry7fpzp/image/upload/v1662296727/Movies_Logo_vr3wvf.png"
           />
           <form className="login-form-container" onSubmit={this.onSubmitForm}>

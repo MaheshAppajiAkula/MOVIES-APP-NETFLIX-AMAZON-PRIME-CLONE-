@@ -7,6 +7,8 @@ import LoadingView from '../Loader'
 import MovieDetailsLink from '../MovieDetailsLink'
 import FooterSection from '../FooterSection'
 
+import './index.css'
+
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
@@ -14,7 +16,7 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 }
 
-class MovieDetails extends Component {
+class MovieItemDetails extends Component {
   state = {
     apiStatus: apiStatusConstants.initial,
     movieDetailsList: [],
@@ -218,4 +220,4 @@ class MovieDetails extends Component {
   }
 }
 
-export default MovieDetails
+export default MovieItemDetails
